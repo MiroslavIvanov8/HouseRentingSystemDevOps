@@ -19,10 +19,8 @@ pipeline {
             }
         }
         stage('Run Audit') {
-            steps {
-                withEnv(["PATH+DOTNET=C:\\Users\\<YourUsername>\\.dotnet\\tools"]) {
-                    bat 'dotnet audit -fix --force'
-                }
+            steps {                 
+                bat 'dotnet audit -fix --force'                
             }
         }
         stage('Execute Tests') {
