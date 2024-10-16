@@ -1,30 +1,36 @@
 pipeline {
     agent any
+
     stages {
         stage('Install Dependencies') {
             steps {
-            sh 'dotnet restore'
+                sh 'dotnet restore'
             }
         }
+
         stage('Build Solution') {
-                steps {
+            steps {
                 sh 'dotnet build'
-                }
             }
+        }
+
         stage('Install Audit') {
-                steps {
+            steps {
                 sh 'dotnet tool install --global dotnet-audit'
-                }
             }
-        parallel {
-            stage('Run Audit') {
-                steps {
-                sh 'dotnet audit'
+        }
+
+        stage('Run Audit and Execute Tests') {
+            parallel {
+                stage('Run Audit') {
+                    steps {
+                        sh 'dotnet audit'
+                    }
                 }
-            }
-            stage('Execute Tests') {
-                steps {
-                sh 'dotnet test'
+                stage('Execute Tests') {
+                    steps {
+                        sh 'dotnet test'
+                    }
                 }
             }
         }
