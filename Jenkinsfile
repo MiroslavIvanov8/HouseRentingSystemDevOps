@@ -24,7 +24,7 @@ pipeline {
             parallel {
                 stage('Run Audit') {
                     steps {
-                        bat 'dotnet audit'
+                        bat 'dotnet audit -fix --force'
                     }
                 }
                 stage('Execute Tests') {
