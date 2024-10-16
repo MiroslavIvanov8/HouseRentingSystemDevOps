@@ -6,14 +6,16 @@ pipeline {
             sh 'dotnet restore'
             }
         }
-        stage('Build Solution') {
-            steps {
-            sh 'dotnet build'
+        parallel {
+            stage('Build Solution') {
+                steps {
+                sh 'dotnet build'
+                }
             }
-        }
-        stage('Execute Tests') {
-            steps {
-            sh 'dotnet test'
+            stage('Execute Tests') {
+                steps {
+                sh 'dotnet test'
+                }
             }
         }
     }
