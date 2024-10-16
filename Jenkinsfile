@@ -4,19 +4,19 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                sh 'dotnet restore'
+                bat 'dotnet restore'
             }
         }
 
         stage('Build Solution') {
             steps {
-                sh 'dotnet build'
+                bat 'dotnet build'
             }
         }
 
         stage('Install Audit') {
             steps {
-                sh 'dotnet tool install --global dotnet-audit'
+                bat 'dotnet tool install --global dotnet-audit'
             }
         }
 
@@ -24,12 +24,12 @@ pipeline {
             parallel {
                 stage('Run Audit') {
                     steps {
-                        sh 'dotnet audit'
+                        bat 'dotnet audit'
                     }
                 }
                 stage('Execute Tests') {
                     steps {
-                        sh 'dotnet test'
+                        bat 'dotnet test'
                     }
                 }
             }
