@@ -6,10 +6,20 @@ pipeline {
             sh 'dotnet restore'
             }
         }
-        parallel {
-            stage('Build Solution') {
+        stage('Build Solution') {
                 steps {
                 sh 'dotnet build'
+                }
+            }
+        stage('Install Audit') {
+                steps {
+                sh 'dotnet tool install --global dotnet-audit'
+                }
+            }
+        parallel {
+            stage('Run Audit') {
+                steps {
+                sh 'dotnet audit'
                 }
             }
             stage('Execute Tests') {
